@@ -47,13 +47,37 @@ const TextArea = styled.textarea`
 `;
 
 const Select = styled.select`
-  // Add styles for the select dropdown here
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  background-color: #f8f8f8;
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 20px;
+  &:focus {
+    outline: none;
+    border-color: #9ecaed;
+    box-shadow: 0 0 10px #9ecaed;
+  }
 `;
+
+const History = ({ history }) => (
+  <div>
+    <h2>History</h2>
+    <ul>
+      {history.map((item, index) => (
+        <li key={index}>{item}</li>
+      ))}
+    </ul>
+  </div>
+);
 
 const SpeechSynthesis = () => {
   const [text, setText] = useState("");
   const [voice, setVoice] = useState(null);
   const [voices, setVoices] = useState([]);
+  const [history, setHistory] = useState([]); // New
+  const [showHistory, setShowHistory] = useState(false); // New
 
   const handleChange = (event) => {
     setText(event.target.value);
@@ -64,6 +88,8 @@ const SpeechSynthesis = () => {
     speech.text = text;
     speech.voice = voice;
     window.speechSynthesis.speak(speech);
+
+    setHistory([text, ...history]); // New
   };
 
   const handleVoiceChange = (event) => {
@@ -88,8 +114,17 @@ const SpeechSynthesis = () => {
         ))}
       </Select>
       <Button onClick={handleSpeak}>Speak</Button>
+      <Button onClick={() => setShowHistory(!showHistory)}>
+        {showHistory ? "Hide History" : "Show History"}
+      </Button>
+      {showHistory && <History history={history} />}
     </div>
   );
 };
 
 export default SpeechSynthesis;
+
+
+
+
+

@@ -30,7 +30,7 @@ const AppWrapper = styled.div`
 
 const App = () => (
   <AppWrapper>
-    <h1>My TTS App</h1>
+    <h1>Text-To-Speech</h1>
     <SpeechSynthesis />
   </AppWrapper>
 );
