@@ -13,3 +13,13 @@ This is a simple text-to-speech application built with React and the Web Speech 
 
    ```bash
    git clone https://github.com/ishay60/textospeach.git
+
+
+Usage
+To start the development server, use the command:
+
+bash
+Copy code
+npm start
+Save to grepper
+Then open http://localhost:3000 to view it in the browser.
