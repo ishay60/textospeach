@@ -1,5 +1,16 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { useState, useEffect } from "react";
+import styled, { keyframes } from "styled-components";
+
+// Add animation
+const fadeIn = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+`;
 
 const Button = styled.button`
   padding: 0.5em 1.5em;
@@ -35,24 +46,14 @@ const TextArea = styled.textarea`
   }
 `;
 
-const AppWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: 1em;
-  background-color: #f8f9fa;
-  font-family: Arial, sans-serif;
-
-  h1 {
-    color: #333;
-    margin-bottom: 1em;
-  }
+const Select = styled.select`
+  // Add styles for the select dropdown here
 `;
 
 const SpeechSynthesis = () => {
   const [text, setText] = useState("");
+  const [voice, setVoice] = useState(null);
+  const [voices, setVoices] = useState([]);
 
   const handleChange = (event) => {
     setText(event.target.value);
@@ -61,12 +62,31 @@ const SpeechSynthesis = () => {
   const handleSpeak = () => {
     let speech = new SpeechSynthesisUtterance();
     speech.text = text;
+    speech.voice = voice;
     window.speechSynthesis.speak(speech);
   };
+
+  const handleVoiceChange = (event) => {
+    const selectedVoice = voices.find(
+      (voice) => voice.name === event.target.value
+    );
+    setVoice(selectedVoice);
+  };
+
+  useEffect(() => {
+    setVoices(window.speechSynthesis.getVoices());
+  }, []);
 
   return (
     <div>
       <TextArea value={text} onChange={handleChange} />
+      <Select onChange={handleVoiceChange}>
+        {voices.map((voice, i) => (
+          <option key={i} value={voice.name}>
+            {voice.name}
+          </option>
+        ))}
+      </Select>
       <Button onClick={handleSpeak}>Speak</Button>
     </div>
   );
