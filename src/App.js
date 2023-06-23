@@ -19,7 +19,7 @@ const AppWrapper = styled.div`
   align-items: center;
   min-height: 100vh;
   padding: 1em;
-  background-color: #f8f9fa;
+  background: papayawhip;
   font-family: Arial, sans-serif;
 
   h1 {
