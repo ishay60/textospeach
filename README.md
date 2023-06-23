@@ -21,5 +21,5 @@ To start the development server, use the command:
 bash
 Copy code
 npm start
-Save to grepper
+
 Then open http://localhost:3000 to view it in the browser.
